@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08090d">
+<title>Video Hub</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 25px 15px;
+  color: white;
+  font-family: Arial, sans-serif;
+  background:
+    radial-gradient(ellipse at top, #272344, transparent 55%),
+    #08090d;
+}
+
+.container {
+  max-width: 850px;
+  margin: auto;
+}
+
+header {
+  text-align: center;
+  padding: 25px 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 9px 15px;
+  border: 1px solid #ffffff20;
+  border-radius: 30px;
+  background: #ffffff0b;
+  color: #a9f8d0;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+h1 {
+  font-size: clamp(32px, 7vw, 55px);
+  letter-spacing: -2px;
+  margin-bottom: 10px;
+}
+
+h1 span {
+  color: #a39aff;
+}
+
+.subtitle {
+  color: #9293a3;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.tile {
+  position: relative;
+  min-height: 175px;
+  padding: 20px;
+  text-align: left;
+  color: white;
+  border: 1px solid #ffffff18;
+  border-radius: 24px;
+  background: linear-gradient(
+    145deg,
+    #ffffff15,
+    #ffffff05
+  );
+  cursor: pointer;
+  transition: .2s;
+}
+
+.tile:active {
+  transform: scale(.97);
+  background: #ffffff20;
+}
+
+.number {
+  color: #a4a5b5;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.emoji {
+  display: block;
+  font-size: 35px;
+  margin: 20px 0 12px;
+}
+
+.name {
+  display: block;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.hint {
+  display: block;
+  margin-top: 7px;
+  color: #a4a5b5;
+  font-size: 12px;
+}
+
+.player {
+  display: none;
+  margin-top: 25px;
+  padding: 15px;
+  border: 1px solid #ffffff20;
+  border-radius: 23px;
+  background: #15151d;
+}
+
+.player.active {
+  display: block;
+  animation: appear .25s ease;
+}
+
+.player-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+#videoTitle {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#close {
+  border: 1px solid #ffffff20;
+  background: #ffffff10;
+  color: white;
+  padding: 10px 13px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+video {
+  display: block;
+  width: 100%;
+  max-height: 65vh;
+  aspect-ratio: 16 / 9;
+  background: black;
+  border-radius: 15px;
+}
+
+#message {
+  color: #aaaaba;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+
+footer {
+  text-align: center;
+  color: #777887;
+  font-size: 12px;
+  margin-top: 25px;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 420px) {
+  .tile {
+    min-height: 155px;
+    padding: 14px;
+    border-radius: 19px;
+  }
+
+  .name {
+    font-size: 16px;
+  }
+
+  .emoji {
+    font-size: 30px;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <header>
+    <div class="badge">● VIDEO HUB</div>
+    <h1>Выбирай <span>видео.</span></h1>
+    <p class="subtitle">Четыре кнопки — четыре настроения</p>
+  </header>
+
+  <main class="grid">
+
+    <button class="tile" data-index="0">
+      <span class="number">01 / GAME</span>
+      <span class="emoji">🐔</span>
+      <span class="name">Чикен Ган</span>
+      <span class="hint">Нажми, чтобы смотреть →</span>
+    </button>
+
+    <button class="tile" data-index="1">
+      <span class="number">02 / GAME</span>
+      <span class="emoji">🎯</span>
+      <span class="name">Стандофф</span>
+      <span class="hint">Нажми, чтобы смотреть →</span>
+    </button>
+
+    <button class="tile" data-index="2">
+      <span class="number">03 / VIBES</span>
+      <span class="emoji">💅</span>
+      <span class="name">Фембои</span>
+      <span class="hint">Нажми, чтобы смотреть →</span>
+    </button>
+
+    <button class="tile" data-index="3">
+      <span class="number">04 / MEMES</span>
+      <span class="emoji">🚽</span>
+      <span class="name">Скибиди-туалеты</span>
+      <span class="hint">Нажми, чтобы смотреть →</span>
+    </button>
+
+  </main>
+
+  <section class="player" id="player">
+    <div class="player-header">
+      <span id="videoTitle">Видео</span>
+      <button id="close">✕ Закрыть</button>
+    </div>
+
+    <video id="video" controls playsinline></video>
+
+    <p id="message">
+      Добавь ссылку на видео в файл script.js.
+    </p>
+  </section>
+
+  <footer>
+    VIDEO HUB · DARK GLASS DESIGN
+  </footer>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+        </html>
+        
